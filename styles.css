@@ -1,0 +1,240 @@
+/* VYLOS — Ghost Tech Stylesheet
+   Polished, minimal, performant
+*/
+:root{
+  --bg:#000000;
+  --ink:#E6FAFF;
+  --ink-dim:#9ECFE0;
+  --glow:#39D0FF;
+  --line:rgba(57,208,255,0.22);
+  --panel:rgba(10,18,24,0.55);
+  --radius:14px;
+  --maxw:1200px;
+  --space-1:8px; --space-2:12px; --space-3:16px; --space-4:24px; --space-5:32px; --space-6:48px; --space-7:72px;
+  --ease: cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.5;
+  font-size:16px;
+}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--glow);text-decoration:none}
+
+/* Ambient smoke overlay (global subtle) */
+.site-overlay::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(ellipse at 10% 20%, rgba(57,208,255,0.06) 0%, transparent 30%), radial-gradient(ellipse at 80% 70%, rgba(57,208,255,0.04) 0%, transparent 35%);
+  filter:blur(36px);opacity:0.65;mix-blend-mode:screen;
+}
+
+/* Page container */
+.wrap{position:relative;z-index:2}
+main{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+section{padding:clamp(48px,8vh,96px) 0;position:relative}
+
+/* Header */
+.header{display:none}
+
+/* Hero */
+.ghost-hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.ghost-bg{position:absolute;inset:0;background:url('assets/ghost-hero.jpg') center/cover no-repeat;mix-blend-mode:multiply}
+.ghost-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.6) 10%, rgba(0,0,0,0.85) 70%)}
+.ghost-smoke{position:absolute;inset:0;background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAA...');opacity:0.18;filter:blur(12px);mix-blend-mode:screen}
+.ghost-hero-inner{position:relative;z-index:3;text-align:center;max-width:1100px;padding:48px}
+.coming-soon{font-family:Rajdhani, Inter, sans-serif;letter-spacing:0.18em;color:var(--ink);font-weight:600;font-size:clamp(18px,2.4vw,28px);margin-top:10px;opacity:0.95}
+.ghost-preorder-btn{display:inline-block;margin:14px auto 0 auto;padding:16px 48px;font-size:1.14rem;border-radius:12px; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-tap-highlight-color:transparent;cursor:pointer;background:transparent;color:var(--glow);border:none;box-shadow:none;text-shadow:none}
+.ghost-preorder-btn:focus{outline:none}
+.ghost-preorder-btn:focus-visible{outline:2px solid var(--glow);outline-offset:4px;border-radius:12px}
+.ghost-preorder-btn::-moz-focus-inner{border:0}
+.ghost-title{font-family:Rajdhani, Inter, sans-serif;font-weight:800;font-size:clamp(44px,8vw,96px);line-height:1;letter-spacing:0.12em;color:var(--ink);text-shadow:0 0 28px rgba(57,208,255,0.14); -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-tap-highlight-color:transparent; -webkit-touch-callout:none}
+
+/* Ensure LEARN MORE button text is neon blue */
+.ghost-preorder-btn{ color: var(--glow) !important; }
+.ghost-preorder-btn:hover, .ghost-preorder-btn:focus-visible{ color: var(--glow) !important; }
+
+/* animated ellipsis controlled by JS (CSS kept minimal) */
+.title-ellipsis{display:inline-block;margin-left:10px;color:var(--ink);font-weight:600;min-width:3ch;text-align:left}
+@media (prefers-reduced-motion:reduce){.title-ellipsis{transition:none}}
+
+.ethos-inner{max-width:820px;margin:0 auto;text-align:center}
+.ethos-inner h3{font-size:1.4rem}
+.ethos-inner p{font-size:1rem;color:var(--ink-dim)}
+
+.contact-line{margin:4px 0 0;text-align:center;font-size:0.88rem}
+.contact-line a{color:var(--glow);font-weight:700;text-decoration:none}
+
+/* Footer: consolidated, smaller and tighter so contact-line reads as part of footer */
+.sitefoot{padding:12px 0 20px;text-align:center;color:var(--ink-dim);font-size:0.84rem;display:flex;flex-direction:column;gap:6px;align-items:center}
+.sitefoot .foot-tag,
+.sitefoot > div:nth-child(2){color:var(--ink)}
+
+/* Social icons: keep dim by default, neon-blue on hover with slight scale */
+.icons{display:flex;gap:14px;margin-top:4px}
+.icons .icon{display:inline-flex;align-items:center;justify-content:center;color:var(--ink-dim);transition:color 160ms var(--ease)}
+.icons .icon svg{width:20px;height:20px;stroke:var(--ink-dim) !important;transition:transform 160ms var(--ease),filter 160ms var(--ease),stroke 160ms var(--ease)}
+.icons .icon:focus-visible{outline:2px solid rgba(57,208,255,0.12);outline-offset:4px;border-radius:6px}
+.icons .icon:hover,.icons .icon:focus-visible{color:var(--glow)}
+.icons .icon:hover svg,.icons .icon:focus-visible svg{stroke:var(--glow) !important;transform:scale(1.12);filter:drop-shadow(0 8px 22px rgba(57,208,255,0.08))}
+
+/* Panels / cards */
+.glass-panel{background:var(--panel);backdrop-filter:blur(8px);border-radius:var(--radius);box-shadow:0 8px 40px rgba(0,0,0,0.6), inset 0 0 30px rgba(57,208,255,0.04);padding:24px}
+.featured-product{display:grid;grid-template-columns:1fr 1.2fr;gap:24px;align-items:center}
+.product-art{background:url('assets/ghost-hero.jpg') center/cover no-repeat;border-radius:12px;height:220px;opacity:0.22}
+.product-copy h2{font-family:Rajdhani;font-weight:600;color:var(--glow);margin:0 0 10px}
+.product-bullets{margin:0;padding:0;list-style:none}
+.product-bullets li{padding-left:18px;position:relative;margin-bottom:8px;color:var(--ink-dim)}
+.product-bullets li::before{content:'';position:absolute;left:0;top:8px;width:8px;height:8px;background:var(--glow);border-radius:2px}
+.spec-row{display:flex;gap:18px;color:var(--ink-dim);font-size:0.95rem;margin-top:12px}
+.cta-row{margin-top:18px;display:flex;gap:12px}
+
+/* roadmap */
+.timeline{display:flex;align-items:center;gap:24px;justify-content:center}
+.timeline-step{text-align:center}
+.timeline-dot{width:14px;height:14px;background:var(--glow);border-radius:50%;box-shadow:0 0 0 0 rgba(57,208,255,0.12);animation:pulse 1.8s infinite}
+.timeline-dot.active{box-shadow:0 0 16px 4px rgba(57,208,255,0.18)}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(57,208,255,0.12)}70%{box-shadow:0 0 0 8px rgba(57,208,255,0.06)}100%{box-shadow:0 0 0 0 rgba(57,208,255,0.12)}}
+
+/* FAQ */
+.faq-item{border-bottom:1px solid var(--line);padding:12px 0}
+.faq-toggle{background:none;border:none;color:var(--ink);font-family:Rajdhani;font-weight:600;font-size:1.02rem;padding:8px 0;display:block;width:100%;text-align:left}
+.faq-toggle[aria-expanded="true"]{color:var(--glow)}
+.faq-content{color:var(--ink-dim);padding-left:12px;margin-top:8px}
+
+/* Mailing strip */
+.mailing-strip{display:flex;gap:12px;align-items:center;justify-content:center;padding:18px;border-radius:12px}
+.mailing-strip input{background:rgba(0,0,0,0.35);border-radius:999px;padding:12px 16px;border:1px solid rgba(255,255,255,0.02);color:var(--ink);min-width:200px}
+.mailing-strip button{padding:12px 18px;border-radius:999px}
+
+/* Project GHOST preview section */
+.section-ghost{position:relative;padding:clamp(72px,12vh,160px) 24px;max-width:1200px;margin:0 auto;background:radial-gradient(60% 40% at 50% 0%, rgba(57,208,255,.07), transparent 70%),radial-gradient(40% 30% at 70% 20%, rgba(255,255,255,.04), transparent 60%);border-top:1px solid var(--line)}
+.section-ghost .ghost-reveal{max-width:900px;margin:0 auto;backdrop-filter:blur(6px);background:var(--panel);border-radius:14px;padding:clamp(24px,4vw,48px);box-shadow:0 0 0 1px rgba(57,208,255,.10),0 30px 80px rgba(0,0,0,.6),inset 0 0 40px rgba(57,208,255,.06)}
+.reveal-init{opacity:0;transform:translateY(18px) scale(.995);filter:blur(6px)}
+.reveal-in{opacity:1;transform:translateY(0) scale(1);filter:blur(0);transition:opacity 700ms cubic-bezier(.22,.61,.36,1),transform 700ms cubic-bezier(.22,.61,.36,1),filter 700ms cubic-bezier(.22,.61,.36,1)}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px 24px;margin-top:16px}
+.specs li{list-style:none;color:var(--ink-dim)}
+.specs li span{opacity:.7;margin-right:6px}
+.btn-learn{color:var(--ink);text-decoration:none}
+.btn-learn:focus-visible{outline:2px solid var(--glow);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.reveal-init{opacity:1;transform:none;filter:none}.reveal-in{transition:none}}
+
+/* === Project GHOST — ultra-minimal overrides ===
+   Remove the blue glass card and present simple black content with thin cyan dividers
+*/
+:root{ --line: rgba(57,208,255,.18); }
+
+.section-ghost{
+  background: transparent; /* no panel background */
+  border: 0;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: clamp(56px, 10vh, 120px) 24px;
+}
+
+/* remove any previously applied "card" visuals */
+.section-ghost .ghost-reveal{
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  filter: none !important;
+}
+
+/* simple top divider line */
+.section-ghost::before{
+  content: "";
+  display: block;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
+  margin-bottom: clamp(32px, 6vh, 56px);
+}
+
+/* typography */
+.section-ghost h2{
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.15;
+  letter-spacing: .02em;
+  margin: 0 0 16px 0;
+  color: var(--glow);
+}
+
+.section-ghost p{
+  color: var(--ink) !important;
+  max-width: 60ch;
+  margin: 0 0 28px 0;
+}
+
+/* specs as a quiet inline grid with thin separators */
+.specs{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px 24px;
+  margin: 12px 0 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.specs li{
+  list-style: none;
+  color: var(--ink-dim);
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+.specs li span{ opacity:.75; }
+.specs li b{ color: var(--ink); font-weight: 600; }
+
+/* links: cyan, no heavy glow */
+.section-ghost a{
+  color: var(--glow);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.section-ghost a:hover{ border-bottom-color: var(--glow); }
+
+/* reveal animation stays subtle */
+.reveal-init{ opacity: 0; transform: translateY(8px); }
+.reveal-in{ opacity: 1; transform: none; transition: opacity .5s ease, transform .5s ease; }
+@media (prefers-reduced-motion: reduce){
+  .reveal-init { opacity:1; transform:none; }
+  .reveal-in { transition:none; }
+}
+
+/* parts list and note for PROJECT ZERO */
+.section-ghost .parts{margin-top:20px}
+.section-ghost .parts h3{font-size:1.02rem;color:var(--glow);margin:0 0 12px 0}
+.section-ghost .parts ul{list-style:none;margin:0;padding:0;display:block}
+.section-ghost .parts li{padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.02);color:var(--ink) !important}
+.section-ghost .parts li:last-child{border-bottom:0}
+.section-ghost .parts li:hover{color:var(--ink);border-bottom-color:var(--line)}
+.section-ghost .note{margin-top:14px;color:var(--ink-dim);font-size:0.92rem;font-style:italic}
+
+/* Title row: put H1 and small preorder button inline */
+.title-row{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap}
+.title-preorder{font-family:Rajdhani, Inter, sans-serif;background:transparent;border:none;color:var(--glow);padding:8px 14px;border-radius:10px;font-weight:700;text-decoration:none}
+.title-preorder:hover,.title-preorder:focus-visible{filter:drop-shadow(0 8px 22px rgba(57,208,255,0.08));transform:translateY(-2px)}
+
+/* Description row: paragraph + inline CTA */
+.desc-row{display:flex;align-items:flex-start;gap:20px;justify-content:flex-start;max-width:900px;margin:0 auto;width:100%}
+.desc-row p{flex:1;margin:0}
+.ghost-cta-inline{align-self:center;display:inline-block;background:transparent;color:var(--glow);padding:10px 16px;border-radius:10px;font-weight:700;text-decoration:none}
+.ghost-cta-inline:hover,.ghost-cta-inline:focus-visible{filter:drop-shadow(0 8px 22px rgba(57,208,255,0.08));transform:translateY(-2px);text-decoration:none;border-bottom:0}
+.ghost-cta-inline, .title-preorder, .btn-learn, .ghost-preorder-btn{ text-decoration: none !important; }
+@media(max-width:760px){.desc-row{flex-direction:column;align-items:center}.ghost-cta-inline{margin-top:12px}}
+
+/* utilities */
+.hide{display:none}
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity 0.7s var(--ease),transform 0.7s var(--ease)}
+.fade-in.is-visible{opacity:1;transform:none}
+
+@media (max-width:900px){.featured-product{grid-template-columns:1fr}.ghost-hero-inner{text-align:center}.caption-small{left:16px;bottom:16px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}

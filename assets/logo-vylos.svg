@@ -1,0 +1,6 @@
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g>
+    <polyline points="10,10 30,34 60,6 90,34 110,10" stroke="#39D0FF" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="60" y="38" text-anchor="middle" font-family="Rajdhani, Inter, Arial, sans-serif" font-size="18" fill="#E6FAFF" letter-spacing="0.18em">VYLOS</text>
+  </g>
+</svg>
