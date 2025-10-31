@@ -3,10 +3,10 @@
 */
 :root{
   --bg:#000000;
-  --ink:#E6FAFF;
+  --ink:#C0C0C0; /* updated: Steel Silver text color */
   --ink-dim:#9ECFE0;
-  --glow:#39D0FF;
-  --line:rgba(57,208,255,0.22);
+  --glow:#2A8CFF; /* updated: Electric Blue -> #2A8CFF */
+  --line:rgba(42,140,255,0.22); /* adjusted to match new glow */
   --panel:rgba(10,18,24,0.55);
   --radius:14px;
   --maxw:1200px;
@@ -17,7 +17,9 @@
 html,body{height:100%}
 body{
   margin:0;
-  background:var(--bg);
+  /* keep a solid black background site-wide; hero will show the tiled pattern */
+  background-color: var(--bg);
+  background-image: none;
   color:var(--ink);
   font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
   -webkit-font-smoothing:antialiased;
@@ -25,13 +27,14 @@ body{
   line-height:1.5;
   font-size:16px;
 }
+
 img{max-width:100%;height:auto;display:block}
 a{color:var(--glow);text-decoration:none}
 
 /* Ambient smoke overlay (global subtle) */
 .site-overlay::before{
   content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background-image:radial-gradient(ellipse at 10% 20%, rgba(57,208,255,0.06) 0%, transparent 30%), radial-gradient(ellipse at 80% 70%, rgba(57,208,255,0.04) 0%, transparent 35%);
+  background-image:radial-gradient(ellipse at 10% 20%, rgba(42,140,255,0.06) 0%, transparent 30%), radial-gradient(ellipse at 80% 70%, rgba(42,140,255,0.04) 0%, transparent 35%);
   filter:blur(36px);opacity:0.65;mix-blend-mode:screen;
 }
 
@@ -44,19 +47,40 @@ section{padding:clamp(48px,8vh,96px) 0;position:relative}
 .header{display:none}
 
 /* Hero */
-.ghost-hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.ghost-bg{position:absolute;inset:0;background:url('assets/ghost-hero.jpg') center/cover no-repeat;mix-blend-mode:multiply}
+.ghost-hero{height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
+  /* keep the tiled pattern only inside the hero bounds */
+  background-color: var(--bg);
+  background-image: url('assets/background.png');
+  background-repeat: repeat;
+  background-position: center;
+  background-size: auto;
+}
+
+/* disable any pseudo-element extender so hero ends exactly at the viewport */
+.ghost-hero::before{ display:none !important; content: none !important; }
+
+/* ensure overlays and hero content sit above the background */
+.ghost-smoke{z-index:1}
+.ghost-overlay{z-index:2}
+.ghost-hero-inner{z-index:3}
+
+/* disable the old absolute hero bg image so the tiled pattern shows cleanly */
+.ghost-bg{position:absolute;inset:0;mix-blend-mode:multiply;background:none}
 .ghost-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.6) 10%, rgba(0,0,0,0.85) 70%)}
 .ghost-smoke{position:absolute;inset:0;background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAA...');opacity:0.18;filter:blur(12px);mix-blend-mode:screen}
 .ghost-hero-inner{position:relative;z-index:3;text-align:center;max-width:1100px;padding:48px}
-.coming-soon{font-family:Rajdhani, Inter, sans-serif;letter-spacing:0.18em;color:var(--ink);font-weight:600;font-size:clamp(18px,2.4vw,28px);margin-top:10px;opacity:0.95}
-.ghost-preorder-btn{display:inline-block;margin:14px auto 0 auto;padding:16px 48px;font-size:1.14rem;border-radius:12px; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-tap-highlight-color:transparent;cursor:pointer;background:transparent;color:var(--glow);border:none;box-shadow:none;text-shadow:none}
+.coming-soon{font-family:Rajdhani, Inter, sans-serif;letter-spacing:0.18em;color:var(--ink);font-weight:600;font-size:clamp(18px,2.4vw,28px);margin-top:10px;opacity:0.7;
+  -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; /* prevent text selection */
+  -webkit-touch-callout:none; /* disable callout on iOS */
+}
+.ghost-preorder-btn{display:inline-block;margin:14px auto 0 auto;padding:16px 48px;font-size:1.14rem;border-radius:12px; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-tap-highlight-color:transparent;cursor:pointer;background:transparent;color:var(--glow);border:none;box-shadow:none;text-shadow:none;transition:transform 180ms var(--ease),filter 180ms var(--ease),color 160ms var(--ease)}
 .ghost-preorder-btn:focus{outline:none}
 .ghost-preorder-btn:focus-visible{outline:2px solid var(--glow);outline-offset:4px;border-radius:12px}
 .ghost-preorder-btn::-moz-focus-inner{border:0}
-.ghost-title{font-family:Rajdhani, Inter, sans-serif;font-weight:800;font-size:clamp(44px,8vw,96px);line-height:1;letter-spacing:0.12em;color:var(--ink);text-shadow:0 0 28px rgba(57,208,255,0.14); -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-tap-highlight-color:transparent; -webkit-touch-callout:none}
+.ghost-preorder-btn:hover, .ghost-preorder-btn:focus-visible{ color: var(--glow) !important; filter:drop-shadow(0 8px 22px rgba(42,140,255,0.08)); transform:translateY(-2px); }
+.ghost-title{font-family:Rajdhani, Inter, sans-serif;font-weight:800;font-size:clamp(44px,8vw,96px);line-height:1;letter-spacing:0.06em;color:#ffffff !important;text-shadow:0 0 28px rgba(42,140,255,0.14); -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-tap-highlight-color:transparent; -webkit-touch-callout:none}
 
-/* Ensure LEARN MORE button text is neon blue */
+/* Ensure LEARN MORE button text is neon blue and has hover glow (kept for specificity) */
 .ghost-preorder-btn{ color: var(--glow) !important; }
 .ghost-preorder-btn:hover, .ghost-preorder-btn:focus-visible{ color: var(--glow) !important; }
 
@@ -78,14 +102,14 @@ section{padding:clamp(48px,8vh,96px) 0;position:relative}
 
 /* Social icons: keep dim by default, neon-blue on hover with slight scale */
 .icons{display:flex;gap:14px;margin-top:4px}
-.icons .icon{display:inline-flex;align-items:center;justify-content:center;color:var(--ink-dim);transition:color 160ms var(--ease)}
-.icons .icon svg{width:20px;height:20px;stroke:var(--ink-dim) !important;transition:transform 160ms var(--ease),filter 160ms var(--ease),stroke 160ms var(--ease)}
-.icons .icon:focus-visible{outline:2px solid rgba(57,208,255,0.12);outline-offset:4px;border-radius:6px}
+.icons .icon{display:inline-flex;align-items:center;justify-content:center;color:var(--ink);transition:color 160ms var(--ease)}
+.icons .icon svg{width:20px;height:20px;stroke:var(--ink) !important;transition:transform 160ms var(--ease),filter 160ms var(--ease),stroke 160ms var(--ease)}
+.icons .icon:focus-visible{outline:2px solid rgba(42,140,255,0.12);outline-offset:4px;border-radius:6px}
 .icons .icon:hover,.icons .icon:focus-visible{color:var(--glow)}
-.icons .icon:hover svg,.icons .icon:focus-visible svg{stroke:var(--glow) !important;transform:scale(1.12);filter:drop-shadow(0 8px 22px rgba(57,208,255,0.08))}
+.icons .icon:hover svg,.icons .icon:focus-visible svg{stroke:var(--glow) !important;transform:scale(1.12);filter:drop-shadow(0 8px 22px rgba(42,140,255,0.08))}
 
 /* Panels / cards */
-.glass-panel{background:var(--panel);backdrop-filter:blur(8px);border-radius:var(--radius);box-shadow:0 8px 40px rgba(0,0,0,0.6), inset 0 0 30px rgba(57,208,255,0.04);padding:24px}
+.glass-panel{background:var(--panel);backdrop-filter:blur(8px);border-radius:var(--radius);box-shadow:0 8px 40px rgba(0,0,0,0.6), inset 0 0 30px rgba(42,140,255,0.04);padding:24px}
 .featured-product{display:grid;grid-template-columns:1fr 1.2fr;gap:24px;align-items:center}
 .product-art{background:url('assets/ghost-hero.jpg') center/cover no-repeat;border-radius:12px;height:220px;opacity:0.22}
 .product-copy h2{font-family:Rajdhani;font-weight:600;color:var(--glow);margin:0 0 10px}
@@ -98,9 +122,9 @@ section{padding:clamp(48px,8vh,96px) 0;position:relative}
 /* roadmap */
 .timeline{display:flex;align-items:center;gap:24px;justify-content:center}
 .timeline-step{text-align:center}
-.timeline-dot{width:14px;height:14px;background:var(--glow);border-radius:50%;box-shadow:0 0 0 0 rgba(57,208,255,0.12);animation:pulse 1.8s infinite}
-.timeline-dot.active{box-shadow:0 0 16px 4px rgba(57,208,255,0.18)}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(57,208,255,0.12)}70%{box-shadow:0 0 0 8px rgba(57,208,255,0.06)}100%{box-shadow:0 0 0 0 rgba(57,208,255,0.12)}}
+.timeline-dot{width:14px;height:14px;background:var(--glow);border-radius:50%;box-shadow:0 0 0 0 rgba(42,140,255,0.12);animation:pulse 1.8s infinite}
+.timeline-dot.active{box-shadow:0 0 16px 4px rgba(42,140,255,0.18)}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(42,140,255,0.12)}70%{box-shadow:0 0 0 8px rgba(42,140,255,0.06)}100%{box-shadow:0 0 0 0 rgba(42,140,255,0.12)}}
 
 /* FAQ */
 .faq-item{border-bottom:1px solid var(--line);padding:12px 0}
@@ -128,7 +152,7 @@ section{padding:clamp(48px,8vh,96px) 0;position:relative}
 /* === Project GHOST — ultra-minimal overrides ===
    Remove the blue glass card and present simple black content with thin cyan dividers
 */
-:root{ --line: rgba(57,208,255,.18); }
+:root{ --line: rgba(42,140,255,.18); }
 
 .section-ghost{
   background: transparent; /* no panel background */
@@ -148,13 +172,13 @@ section{padding:clamp(48px,8vh,96px) 0;position:relative}
   filter: none !important;
 }
 
-/* simple top divider line */
+/* simple top divider line (hidden: remove visual blue line but keep spacing) */
 .section-ghost::before{
   content: "";
   display: block;
-  height: 1px;
+  height: 0; /* hide the visible 1px line */
   width: 100%;
-  background: linear-gradient(90deg, transparent, var(--line), transparent);
+  background: none; /* removed the linear-gradient blue divider */
   margin-bottom: clamp(32px, 6vh, 56px);
 }
 
@@ -201,6 +225,19 @@ section{padding:clamp(48px,8vh,96px) 0;position:relative}
 }
 .section-ghost a:hover{ border-bottom-color: var(--glow); }
 
+/* ensure parts list links show the cyan underline on hover like other links */
+.section-ghost .parts a{
+  color: var(--glow);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  display: inline-block; /* ensures border-bottom renders consistently */
+  transition: border-color 180ms var(--ease), color 160ms var(--ease);
+}
+.section-ghost .parts li:hover a,
+.section-ghost .parts li a:hover{
+  border-bottom-color: var(--glow);
+}
+
 /* reveal animation stays subtle */
 .reveal-init{ opacity: 0; transform: translateY(8px); }
 .reveal-in{ opacity: 1; transform: none; transition: opacity .5s ease, transform .5s ease; }
@@ -221,13 +258,13 @@ section{padding:clamp(48px,8vh,96px) 0;position:relative}
 /* Title row: put H1 and small preorder button inline */
 .title-row{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap}
 .title-preorder{font-family:Rajdhani, Inter, sans-serif;background:transparent;border:none;color:var(--glow);padding:8px 14px;border-radius:10px;font-weight:700;text-decoration:none}
-.title-preorder:hover,.title-preorder:focus-visible{filter:drop-shadow(0 8px 22px rgba(57,208,255,0.08));transform:translateY(-2px)}
+.title-preorder:hover,.title-preorder:focus-visible{filter:drop-shadow(0 8px 22px rgba(42,140,255,0.08));transform:translateY(-2px)}
 
 /* Description row: paragraph + inline CTA */
 .desc-row{display:flex;align-items:flex-start;gap:20px;justify-content:flex-start;max-width:900px;margin:0 auto;width:100%}
 .desc-row p{flex:1;margin:0}
 .ghost-cta-inline{align-self:center;display:inline-block;background:transparent;color:var(--glow);padding:10px 16px;border-radius:10px;font-weight:700;text-decoration:none}
-.ghost-cta-inline:hover,.ghost-cta-inline:focus-visible{filter:drop-shadow(0 8px 22px rgba(57,208,255,0.08));transform:translateY(-2px);text-decoration:none;border-bottom:0}
+.ghost-cta-inline:hover,.ghost-cta-inline:focus-visible{filter:drop-shadow(0 8px 22px rgba(42,140,255,0.08));transform:translateY(-2px);text-decoration:none;border-bottom:0}
 .ghost-cta-inline, .title-preorder, .btn-learn, .ghost-preorder-btn{ text-decoration: none !important; }
 @media(max-width:760px){.desc-row{flex-direction:column;align-items:center}.ghost-cta-inline{margin-top:12px}}
 

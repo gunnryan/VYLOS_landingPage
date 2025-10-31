@@ -81,9 +81,14 @@
     }, false);
 
     if('IntersectionObserver' in window && revealBox){
+      // keep the observer active and toggle the class on enter/exit so the animation replays each time
       const ioG = new IntersectionObserver((entries)=>{
         entries.forEach(entry=>{
-          if(entry.isIntersecting){ entry.target.classList.add('reveal-in'); ioG.unobserve(entry.target); }
+          if(entry.isIntersecting){
+            entry.target.classList.add('reveal-in');
+          } else {
+            entry.target.classList.remove('reveal-in');
+          }
         });
       },{root:null,threshold:0.15});
       ioG.observe(revealBox);
